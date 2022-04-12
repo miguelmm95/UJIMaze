@@ -4,17 +4,11 @@ import es.uji.jvilar.barbariangold.model.Maze
 
 class MainModel {
 
-    object Levels{
-        val all = arrayOf(
-            Maze(
-                arrayOf(
-                    "#######",
-                    "#O.P..#",
-                    "#######",
-                    "#HH HH#",
-                    "#######"
-                )
-            )
-        )
+    var maze : Maze
+    private set
+
+    init {
+        maze = Levels.all[0]
     }
+
 }

@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import es.uji.jvilar.barbariangold.model.CellType
 import es.uji.vj1229.framework.GameActivity
 import es.uji.vj1229.framework.Graphics
 import es.uji.vj1229.framework.IGameController
@@ -32,7 +33,25 @@ class MainActivity : GameActivity() {
 
     override fun onDrawingRequested(): Bitmap {
         graphics.clear(Color.WHITE)
-        graphics.drawRect(100f,100f,100f,100f,Color.RED)
+
+        for (row in 0 until  model.maze.nRows){
+            for (col in 0 until model.maze.nCols){
+                if(model.maze[row, col].type == CellType.WALL) {
+                    graphics.drawRect(100f * col,100f * row,100f,100f,Color.RED)
+                }
+                if (model.maze[row, col].type == CellType.HOME){
+                    graphics.drawRect(100f * col,100f * row,100f,100f,Color.BLUE)
+                }
+                if (model.maze[row, col].type == CellType.POTION){
+                    graphics.drawRect(100f * col,100f * row,100f,100f,Color.GREEN)
+                }
+                if (model.maze[row, col].type == CellType.ORIGIN){
+                    graphics.drawRect(100f * col,100f * row,100f,100f,Color.CYAN)
+                }
+            }
+        }
+
+        //graphics.drawRect(100f,100f,100f,100f,Color.RED)
 
         return graphics.frameBuffer
     }
