@@ -32,7 +32,7 @@ class MainActivity : GameActivity() {
     }
 
     override fun onDrawingRequested(): Bitmap {
-        graphics.clear(Color.WHITE)
+        graphics.clear(Color.GRAY)
 
         for (row in 0 until  model.maze.nRows){
             for (col in 0 until model.maze.nCols){
@@ -45,11 +45,10 @@ class MainActivity : GameActivity() {
                 if (model.maze[row, col].type == CellType.POTION){
                     graphics.drawRect(100f * col,100f * row,100f,100f,Color.GREEN)
                 }
-                if (model.maze[row, col].type == CellType.ORIGIN){
-                    graphics.drawRect(100f * col,100f * row,100f,100f,Color.CYAN)
-                }
             }
         }
+
+        graphics.drawCircle(model.princess.xPos * 100f,model.princess.yPos * 100f,100f/2, Color.BLUE)
 
         //graphics.drawRect(100f,100f,100f,100f,Color.RED)
 
