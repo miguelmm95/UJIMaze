@@ -34,6 +34,13 @@ class MainActivity : GameActivity() {
     override fun onDrawingRequested(): Bitmap {
         graphics.clear(Color.GRAY)
 
+        drawMaze()
+        drawPrincess()
+
+        return graphics.frameBuffer
+    }
+
+    fun drawMaze(){
         for (row in 0 until  model.maze.nRows){
             for (col in 0 until model.maze.nCols){
                 if(model.maze[row, col].type == CellType.WALL) {
@@ -47,11 +54,8 @@ class MainActivity : GameActivity() {
                 }
             }
         }
-
+    }
+    fun drawPrincess(){
         graphics.drawCircle(model.princess.xPos * 100f,model.princess.yPos * 100f,100f/2, Color.BLUE)
-
-        //graphics.drawRect(100f,100f,100f,100f,Color.RED)
-
-        return graphics.frameBuffer
     }
 }

@@ -1,6 +1,7 @@
 package es.uji.al386686.ujimaze
 
 import es.uji.al386686.ujimaze.Model.Direction
+import es.uji.al386686.ujimaze.Model.Position
 import es.uji.jvilar.barbariangold.model.Maze
 
 class MainModel {
