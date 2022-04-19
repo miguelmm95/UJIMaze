@@ -1,6 +1,5 @@
 package es.uji.al386686.ujimaze
 
-import android.util.Log
 import es.uji.jvilar.barbariangold.controller.GestureDetector
 import es.uji.vj1229.framework.IGameController
 import es.uji.vj1229.framework.TouchHandler
@@ -31,10 +30,10 @@ class Controller(var width:Int, var height : Int, private val model : MainModel,
                     }
 
                     TouchHandler.TouchType.TOUCH_UP ->{
-                        var isSwipe = gesture.onTouchUp(normalizedX,normalizedY)
+                        var action = gesture.onTouchUp(normalizedX,normalizedY)
 
-                        if( isSwipe == GestureDetector.Gestures.SWIPE){
-                            
+                        if( action == GestureDetector.Gestures.SWIPE){
+                            model.princess.direction = gesture.direction
                         }
                     }
                 }
