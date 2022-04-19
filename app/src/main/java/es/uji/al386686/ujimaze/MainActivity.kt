@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import es.uji.jvilar.barbariangold.model.CellType
 import es.uji.vj1229.framework.GameActivity
 import es.uji.vj1229.framework.Graphics
@@ -15,6 +16,7 @@ class MainActivity : GameActivity() {
     private var height = 0
 
     private val model = MainModel()
+    private lateinit var controller : Controller
 
     private lateinit var graphics: Graphics
 
@@ -23,7 +25,16 @@ class MainActivity : GameActivity() {
         landscapeFullScreenOnCreate()
     }
 
-    override fun buildGameController() = Controller(model,this)
+    override fun buildGameController(): IGameController {
+        val displayMetrics = DisplayMetrics()
+        @Suppress("DEPRECATION")
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        controller = Controller(displayMetrics.widthPixels,
+                    displayMetrics.heightPixels, model, this)
+        return controller
+    }
+
+    //= Controller(model,this)
 
     override fun onBitmapMeasuresAvailable(width: Int, height: Int) {
         this.width = width
