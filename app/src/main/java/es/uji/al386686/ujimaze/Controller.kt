@@ -27,7 +27,6 @@ class Controller(var width:Int, var height : Int, private val model : MainModel,
 
                         if( action == GestureDetector.Gestures.SWIPE){
                             model.changePrincessDirection(gesture.direction)
-                            //model.princess.direction = gesture.direction
                         }
                     }
                 }

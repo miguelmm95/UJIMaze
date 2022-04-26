@@ -56,7 +56,7 @@ class MainActivity : GameActivity() {
                     graphics.drawRect(100f * col,100f * row,100f,100f,Color.RED)
                 }
                 if (model.maze[row, col].type == CellType.HOME){
-                    graphics.drawRect(100f * col,100f * row,100f,100f,Color.BLUE)
+                    drawMonsters()
                 }
                 if (model.maze[row, col].type == CellType.POTION){
                     graphics.drawRect(100f * col,100f * row,100f,100f,Color.GREEN)
@@ -67,7 +67,14 @@ class MainActivity : GameActivity() {
             }
         }
     }
+
     fun drawPrincess(){
         graphics.drawCircle(model.princess.xPos * 100f,model.princess.yPos * 100f,100f/2, Color.BLUE)
+    }
+
+    fun drawMonsters(){
+        for(m in model.monsters){
+            graphics.drawRect(m.xPos * 100f - 50f,m.yPos * 100f - 50f,100f,100f,Color.BLUE)
+        }
     }
 }

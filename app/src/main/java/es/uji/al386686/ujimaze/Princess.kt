@@ -22,7 +22,6 @@ class Princess(var xPos : Float, var yPos : Float, var direction: Direction, var
         yPos += SPEED * deltaTime * direction.row
 
         var newPosition = Position((yPos - 0.5).roundToInt(),(xPos - 0.5).roundToInt())
-        Log.d("TEST",newPosition.toString())
 
         if(maze[newPosition].type == CellType.WALL || maze[newPosition].type == CellType.DOOR){
             toCenter()
