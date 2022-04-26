@@ -34,8 +34,6 @@ class MainActivity : GameActivity() {
         return controller
     }
 
-    //= Controller(model,this)
-
     override fun onBitmapMeasuresAvailable(width: Int, height: Int) {
         this.width = width
         this.height = height
@@ -62,6 +60,9 @@ class MainActivity : GameActivity() {
                 }
                 if (model.maze[row, col].type == CellType.POTION){
                     graphics.drawRect(100f * col,100f * row,100f,100f,Color.GREEN)
+                }
+                if(model.maze[row,col].type == CellType.GOLD){
+                    graphics.drawCircle(100f*col + 50f,100f*row + 50f,25f/2,Color.YELLOW)
                 }
             }
         }

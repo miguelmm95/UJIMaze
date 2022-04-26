@@ -13,16 +13,9 @@ class Controller(var width:Int, var height : Int, private val model : MainModel,
 
         if (touchEvents != null) {
             for (event in touchEvents){
-                /*Log.d("WIDTH", "$width")
-                Log.d("HEIGHT","$height")
-                Log.d("EVENT X", "${event.x}")
-                Log.d("EVENT Y", "${event.y}")
-                Log.d("X / WIDHT", ((event.x).toFloat() / (width).toFloat()).toString())
-                Log.d("Y / HEIGHT", ((event.y / height).toFloat()).toString())*/
-                val normalizedX : Float = ((event.x).toFloat() / (width).toFloat())
-                val normalizedY : Float = ((event.y).toFloat() / (height).toFloat()).toFloat()
-                //Log.d("COORDENADAS EVENT", "$normalizedX - $normalizedY")
 
+                val normalizedX : Float = ((event.x).toFloat() / (width).toFloat())
+                val normalizedY : Float = ((event.y).toFloat() / (height).toFloat())
 
                 when(event.type){
                     TouchHandler.TouchType.TOUCH_DOWN ->{
@@ -33,7 +26,8 @@ class Controller(var width:Int, var height : Int, private val model : MainModel,
                         var action = gesture.onTouchUp(normalizedX,normalizedY)
 
                         if( action == GestureDetector.Gestures.SWIPE){
-                            model.princess.direction = gesture.direction
+                            model.changePrincessDirection(gesture.direction)
+                            //model.princess.direction = gesture.direction
                         }
                     }
                 }

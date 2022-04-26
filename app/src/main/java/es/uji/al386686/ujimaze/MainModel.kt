@@ -17,10 +17,14 @@ class MainModel {
 
     init {
         maze = Levels.all[0]
-        princess = Princess(maze.origin.col+0.5f,maze.origin.row+0.5f,direction)
+        princess = Princess(maze.origin.col+0.5f,maze.origin.row+0.5f,direction, Position(maze.origin.col, maze.origin.row),true)
     }
 
     fun update(deltaTime: Float) {
-        princess.move(deltaTime)
+        princess.move(deltaTime,maze)
+    }
+
+    fun changePrincessDirection(nextDirection: Direction) {
+        princess.changeDirection(nextDirection,maze)
     }
 }
