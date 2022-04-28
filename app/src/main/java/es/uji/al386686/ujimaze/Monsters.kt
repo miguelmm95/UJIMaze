@@ -1,5 +1,6 @@
 package es.uji.al386686.ujimaze
 
+import android.util.Log
 import es.uji.al386686.ujimaze.Model.Direction
 import es.uji.al386686.ujimaze.Model.Position
 import es.uji.jvilar.barbariangold.model.CellType
@@ -21,19 +22,47 @@ class Monsters(var position: Position) {
     fun move(deltaTime : Float, maze: Maze){
         xPos += SPEED * deltaTime * direction.col
         yPos += SPEED * deltaTime * direction.row
-        
-        if(!maze[position].hasWall(direction.turnRight()) ||
-                !maze[position].hasWall(direction.turnLeft())){
-            val newDirection = fixDirection(maze)
-            if(direction != newDirection){
-                toCenter()
-                direction = newDirection
+
+        var newPosition = Position((yPos - 0.5f).roundToInt(),(xPos - 0.5f).roundToInt())
+
+        if (maze[newPosition].type == CellType.WALL){
+            toCenter()
+            direction = fixDirection(maze)
+        }else{
+            position = newPosition
+            if(!maze[position].hasWall(direction.turnRight()) || !maze[position].hasWall(direction.turnLeft())){
+                val newDirection = fixDirection(maze)
+                if(direction != newDirection){
+                    direction = newDirection
+                }
             }
         }
     }
 
     private fun fixDirection(maze: Maze): Direction {
+        val directionList:ArrayList<Direction> = ArrayList()
 
+        if(!maze[position].hasWall(Direction.UP) && Direction.UP != direction.opposite()){
+            directionList.add(Direction.UP)
+        }
+
+        if(!maze[position].hasWall(Direction.LEFT) && Direction.LEFT != direction.opposite()){
+            directionList.add(Direction.LEFT)
+        }
+
+        if(!maze[position].hasWall(Direction.RIGHT) && Direction.RIGHT != direction.opposite()){
+            directionList.add(Direction.RIGHT)
+        }
+
+        if(!maze[position].hasWall(Direction.DOWN) && Direction.DOWN != direction.opposite()){
+            directionList.add(Direction.DOWN)
+        }
+
+        return if(directionList.isEmpty()){
+            direction.opposite()
+        }else{
+            directionList.random()
+        }
     }
 
     private fun toCenter() {

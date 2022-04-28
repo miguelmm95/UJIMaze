@@ -4,7 +4,7 @@ import es.uji.jvilar.barbariangold.model.Maze
 
 object Levels{
     val all = arrayOf(
-        Maze(
+        /*Maze(
             arrayOf(
                 "#######",
                 "#O.P..#",
@@ -12,6 +12,17 @@ object Levels{
                 "#HH HH#",
                 "#######"
             )
-        )
+        ),*/
+            Maze(
+                    arrayOf(
+                            "#######",
+                            "#O.P..#",
+                            "#######",
+                            "#HH HH#",
+                            "# ### #",
+                            "#     #",
+                            "#######"
+                    )
+            )
     )
 }
