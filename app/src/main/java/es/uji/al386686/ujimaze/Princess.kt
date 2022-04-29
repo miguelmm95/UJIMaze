@@ -7,7 +7,10 @@ import es.uji.jvilar.barbariangold.model.CellType
 import es.uji.jvilar.barbariangold.model.Maze
 import kotlin.math.roundToInt
 
-class Princess(var xPos : Float, var yPos : Float, var direction: Direction, var position: Position, var isMoving : Boolean) {
+class Princess(var xPos : Float, var yPos : Float, var position: Position, var isMoving : Boolean) {
+
+    var direction : Direction = Direction.RIGHT
+    var coinsCollected : Int = 0
 
     companion object{
         private const val SPEED = 1.5f
@@ -43,10 +46,19 @@ class Princess(var xPos : Float, var yPos : Float, var direction: Direction, var
         }
     }
 
-    fun coinDetection(maze:Maze){
+    private fun coinDetection(maze:Maze){
         if(maze[position].type == CellType.GOLD && !maze[position].used){
             maze[position].used = true
+            coinsCollected += 1
+
         }
+    }
+
+    fun resetPrincess(maze: Maze){
+        xPos = maze.origin.col + 0.5f
+        yPos = maze.origin.row + 0.5f
+        coinsCollected = 0
+        direction = Direction.RIGHT
     }
 
     private fun toCenter() {

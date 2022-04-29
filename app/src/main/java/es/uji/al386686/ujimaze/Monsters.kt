@@ -39,6 +39,13 @@ class Monsters(var position: Position) {
         }
     }
 
+    fun resetMonsters(maze : Maze, initialPosition: Position){
+        xPos = initialPosition.col + 0.5f
+        yPos = initialPosition.row + 0.5f
+        direction = fixDirection(maze)
+
+    }
+
     private fun fixDirection(maze: Maze): Direction {
         val directionList:ArrayList<Direction> = ArrayList()
 

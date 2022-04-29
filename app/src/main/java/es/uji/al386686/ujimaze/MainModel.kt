@@ -1,5 +1,6 @@
 package es.uji.al386686.ujimaze
 
+import android.util.Log
 import es.uji.al386686.ujimaze.Model.Direction
 import es.uji.al386686.ujimaze.Model.Position
 import es.uji.jvilar.barbariangold.model.CellType
@@ -13,8 +14,6 @@ class MainModel {
     var princess:Princess
     private set
 
-    var direction:Direction = Direction.RIGHT
-
     val monsters : ArrayList<Monsters> = addMonsters()
 
     private fun addMonsters(): ArrayList<Monsters> {
@@ -27,18 +26,30 @@ class MainModel {
     }
 
     init {
-        princess = Princess(maze.origin.col+0.5f,maze.origin.row+0.5f,direction, Position(maze.origin.col, maze.origin.row),true)
+        princess = Princess(maze.origin.col+0.5f,maze.origin.row+0.5f, Position(maze.origin.col, maze.origin.row),true)
     }
 
     fun update(deltaTime: Float) {
-        princess.move(deltaTime,maze)
+        if (princess.coinsCollected == maze.gold){
+            restartLevel()
+        }else{
+            princess.move(deltaTime,maze)
 
-        for (m in monsters){
-            m.move(deltaTime,maze)
+            for (m in monsters){
+                m.move(deltaTime,maze)
+            }
         }
     }
 
     fun changePrincessDirection(nextDirection: Direction) {
         princess.changeDirection(nextDirection,maze)
+    }
+
+    fun restartLevel(){
+        princess.resetPrincess(maze)
+        for (i in 0 until  monsters.size){
+            monsters[i].resetMonsters(maze,maze.enemyOrigins[i])
+        }
+        maze.reset()
     }
 }
