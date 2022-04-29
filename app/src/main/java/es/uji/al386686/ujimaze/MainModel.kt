@@ -22,7 +22,6 @@ class MainModel {
 
         for(p in maze.enemyOrigins){
             monstersAux.add(Monsters(p))
-            //break
         }
         return monstersAux
     }

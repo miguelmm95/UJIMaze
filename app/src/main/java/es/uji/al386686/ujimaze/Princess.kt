@@ -30,6 +30,8 @@ class Princess(var xPos : Float, var yPos : Float, var direction: Direction, var
             position = newPosition
             isMoving = true
         }
+
+        coinDetection(maze)
     }
 
     fun changeDirection(nextDirection: Direction, maze: Maze) {
@@ -38,6 +40,12 @@ class Princess(var xPos : Float, var yPos : Float, var direction: Direction, var
             toCenter()
             isMoving = true
             direction = nextDirection
+        }
+    }
+
+    fun coinDetection(maze:Maze){
+        if(maze[position].type == CellType.GOLD && !maze[position].used){
+            maze[position].used = true
         }
     }
 
