@@ -4,7 +4,7 @@ import es.uji.jvilar.barbariangold.controller.GestureDetector
 import es.uji.vj1229.framework.IGameController
 import es.uji.vj1229.framework.TouchHandler
 
-class Controller(var width:Int, var height : Int, private val model : MainModel, private val view : MainActivity) : IGameController {
+class Controller(var width: Int, var height: Int, private val model: MainModel, private val view: MainActivity) : IGameController {
 
     private val gesture = GestureDetector()
 
@@ -12,20 +12,20 @@ class Controller(var width:Int, var height : Int, private val model : MainModel,
         model.update(deltaTime)
 
         if (touchEvents != null) {
-            for (event in touchEvents){
+            for (event in touchEvents) {
 
-                val normalizedX : Float = ((event.x).toFloat() / (width).toFloat())
-                val normalizedY : Float = ((event.y).toFloat() / (height).toFloat())
+                val normalizedX: Float = ((event.x).toFloat() / (width).toFloat())
+                val normalizedY: Float = ((event.y).toFloat() / (height).toFloat())
 
-                when(event.type){
-                    TouchHandler.TouchType.TOUCH_DOWN ->{
-                        gesture.onTouchDown(normalizedX,normalizedY)
+                when (event.type) {
+                    TouchHandler.TouchType.TOUCH_DOWN -> {
+                        gesture.onTouchDown(normalizedX, normalizedY)
                     }
 
-                    TouchHandler.TouchType.TOUCH_UP ->{
-                        var action = gesture.onTouchUp(normalizedX,normalizedY)
+                    TouchHandler.TouchType.TOUCH_UP -> {
+                        var action = gesture.onTouchUp(normalizedX, normalizedY)
 
-                        if( action == GestureDetector.Gestures.SWIPE){
+                        if (action == GestureDetector.Gestures.SWIPE) {
                             model.changePrincessDirection(gesture.direction)
                         }
                     }

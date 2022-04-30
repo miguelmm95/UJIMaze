@@ -15,7 +15,7 @@ enum class CellType {
 /**
  * A data class for representing the cells of the [Maze].
  */
-data class Cell (val type: CellType, var used: Boolean, val walls: Int) {
+data class Cell(val type: CellType, var used: Boolean, val walls: Int) {
     /**
      * Check whether there is a wall in the given [direction].
      *
@@ -26,10 +26,10 @@ data class Cell (val type: CellType, var used: Boolean, val walls: Int) {
 }
 
 private fun Int.setWall(direction: Direction): Int =
-    this or (1 shl direction.ordinal)
+        this or (1 shl direction.ordinal)
 
 private fun Int.hasWall(direction: Direction): Boolean =
-    this and (1 shl direction.ordinal) != 0
+        this and (1 shl direction.ordinal) != 0
 
 /**
  * A class for representing mazes.
@@ -118,17 +118,17 @@ class Maze(diagram: Array<String>) {
                 if (col < nCols - 1 && current[col + 1] == WALL) walls = walls.setWall(Direction.RIGHT)
 
                 cells[row][col] = Cell(
-                    when (current[col]) {
-                        ORIGIN -> CellType.ORIGIN.also { origin = Position(row, col) }
-                        POTION -> CellType.POTION
-                        HOME -> CellType.HOME.also { enemies.add(Position(row, col)) }
-                        DOOR -> CellType.DOOR
-                        GOLD -> CellType.GOLD.also { gold++ }
-                        WALL -> CellType.WALL
-                        else -> CellType.EMPTY
-                    },
-                    false,
-                    walls
+                        when (current[col]) {
+                            ORIGIN -> CellType.ORIGIN.also { origin = Position(row, col) }
+                            POTION -> CellType.POTION
+                            HOME -> CellType.HOME.also { enemies.add(Position(row, col)) }
+                            DOOR -> CellType.DOOR
+                            GOLD -> CellType.GOLD.also { gold++ }
+                            WALL -> CellType.WALL
+                            else -> CellType.EMPTY
+                        },
+                        false,
+                        walls
                 )
             }
         }
@@ -156,15 +156,15 @@ class Maze(diagram: Array<String>) {
                 for (col in 0 until nCols) {
                     position.col = col
                     append(
-                        when (cells[row][col].type) {
-                            CellType.POTION -> POTION
-                            CellType.GOLD -> GOLD
-                            CellType.EMPTY -> EMPTY
-                            CellType.HOME -> HOME
-                            CellType.DOOR -> DOOR
-                            CellType.ORIGIN -> ORIGIN
-                            CellType.WALL -> WALL
-                        }
+                            when (cells[row][col].type) {
+                                CellType.POTION -> POTION
+                                CellType.GOLD -> GOLD
+                                CellType.EMPTY -> EMPTY
+                                CellType.HOME -> HOME
+                                CellType.DOOR -> DOOR
+                                CellType.ORIGIN -> ORIGIN
+                                CellType.WALL -> WALL
+                            }
                     )
                 }
                 append('\n')
@@ -190,7 +190,7 @@ class Maze(diagram: Array<String>) {
      * @return `true` if there is a wall.
      */
     fun hasWall(position: Position, direction: Direction) =
-        hasWall(position.row, position.col, direction)
+            hasWall(position.row, position.col, direction)
 
     /**
      * Mark all cells as not used.
@@ -215,7 +215,7 @@ class Maze(diagram: Array<String>) {
         /**
          * The [char] used for representing the walls.
          */
-        const val WALL= '#'
+        const val WALL = '#'
 
         /**
          * The [char] used for representing the home places for enemies.

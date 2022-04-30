@@ -10,36 +10,36 @@ import kotlin.random.Random
 
 class Monsters(var position: Position) {
 
-    var xPos : Float = position.col + 0.5f
-    var yPos : Float = position.row + 0.5f
+    var xPos: Float = position.col + 0.5f
+    var yPos: Float = position.row + 0.5f
 
     var direction: Direction = Direction.RIGHT
 
-    companion object{
+    companion object {
         private const val SPEED = 1f
     }
 
-    fun move(deltaTime : Float, maze: Maze){
+    fun move(deltaTime: Float, maze: Maze) {
         xPos += SPEED * deltaTime * direction.col
         yPos += SPEED * deltaTime * direction.row
 
-        var newPosition = Position((yPos - 0.5f).roundToInt(),(xPos - 0.5f).roundToInt())
+        var newPosition = Position((yPos - 0.5f).roundToInt(), (xPos - 0.5f).roundToInt())
 
-        if (maze[newPosition].type == CellType.WALL){
+        if (maze[newPosition].type == CellType.WALL) {
             toCenter()
             direction = fixDirection(maze)
-        }else{
+        } else {
             position = newPosition
-            if(!maze[position].hasWall(direction.turnRight()) || !maze[position].hasWall(direction.turnLeft())){
+            if (!maze[position].hasWall(direction.turnRight()) || !maze[position].hasWall(direction.turnLeft())) {
                 val newDirection = fixDirection(maze)
-                if(direction != newDirection){
+                if (direction != newDirection) {
                     direction = newDirection
                 }
             }
         }
     }
 
-    fun resetMonsters(maze : Maze, initialPosition: Position){
+    fun resetMonsters(maze: Maze, initialPosition: Position) {
         xPos = initialPosition.col + 0.5f
         yPos = initialPosition.row + 0.5f
         direction = fixDirection(maze)
@@ -47,27 +47,27 @@ class Monsters(var position: Position) {
     }
 
     private fun fixDirection(maze: Maze): Direction {
-        val directionList:ArrayList<Direction> = ArrayList()
+        val directionList: ArrayList<Direction> = ArrayList()
 
-        if(!maze[position].hasWall(Direction.UP) && Direction.UP != direction.opposite()){
+        if (!maze[position].hasWall(Direction.UP) && Direction.UP != direction.opposite()) {
             directionList.add(Direction.UP)
         }
 
-        if(!maze[position].hasWall(Direction.LEFT) && Direction.LEFT != direction.opposite()){
+        if (!maze[position].hasWall(Direction.LEFT) && Direction.LEFT != direction.opposite()) {
             directionList.add(Direction.LEFT)
         }
 
-        if(!maze[position].hasWall(Direction.RIGHT) && Direction.RIGHT != direction.opposite()){
+        if (!maze[position].hasWall(Direction.RIGHT) && Direction.RIGHT != direction.opposite()) {
             directionList.add(Direction.RIGHT)
         }
 
-        if(!maze[position].hasWall(Direction.DOWN) && Direction.DOWN != direction.opposite()){
+        if (!maze[position].hasWall(Direction.DOWN) && Direction.DOWN != direction.opposite()) {
             directionList.add(Direction.DOWN)
         }
 
-        return if(directionList.isEmpty()){
+        return if (directionList.isEmpty()) {
             direction.opposite()
-        }else{
+        } else {
             directionList.random()
         }
     }
