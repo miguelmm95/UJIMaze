@@ -16,7 +16,7 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
 
     companion object {
         private const val SPEED = 1.5f
-        private const val POTION_DURATION = 50f
+        private const val POTION_DURATION = 5f
     }
 
     fun move(deltaTime: Float, maze: Maze) {
@@ -72,6 +72,14 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
         xPos = maze.origin.col + 0.5f
         yPos = maze.origin.row + 0.5f
         coinsCollected = 0
+        hasPotion = false
+        time = 0f
+        direction = Direction.RIGHT
+    }
+
+    fun dead(maze: Maze) {
+        xPos = maze.origin.col + 0.5f
+        yPos = maze.origin.row + 0.5f
         hasPotion = false
         time = 0f
         direction = Direction.RIGHT

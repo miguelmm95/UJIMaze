@@ -9,8 +9,8 @@ import kotlin.math.abs
 import java.util.ArrayList as ArrayList
 
 class MainModel {
-    val level = 0
-    var maze: Maze = Levels.all[level]
+    var level = 1
+    var maze: Maze = Levels.all[level - 1]
         private set
 
     var princess: Princess
@@ -36,7 +36,12 @@ class MainModel {
         checkCollisions()
 
         if (princess.coinsCollected == maze.gold) {
-            restartLevel()
+            if (level == Levels.all.size) {
+                restartLevel()
+            } else {
+                level += 1
+                maze = Levels.all[level - 1]
+            }
         } else {
             princess.move(deltaTime, maze)
 
@@ -69,9 +74,8 @@ class MainModel {
                     monsters[i].position = maze.enemyOrigins[i]
                     monsters[i].xPos = maze.enemyOrigins[i].col + 0.5f
                     monsters[i].yPos = maze.enemyOrigins[i].row + 0.5f
-
                 } else {
-                    princess.resetPrincess(maze)
+                    princess.dead(maze)
                     resetAllMonsters()
                 }
             }
