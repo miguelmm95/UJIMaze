@@ -93,7 +93,6 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
     private fun checkPotion(deltaTime: Float) {
         if (hasPotion) {
             time += deltaTime
-
             if (time >= POTION_DURATION) {
                 hasPotion = false
                 time = 0f

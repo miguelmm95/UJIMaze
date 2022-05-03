@@ -15,7 +15,8 @@ class MainActivity : GameActivity() {
     private var height = 0
 
     var cellSize : Int = 0
-    var offSet : Int = 0
+    var offSetX : Int = 0
+    var offSetY : Int = 0
 
     private val model = MainModel()
     private lateinit var controller: Controller
@@ -53,7 +54,8 @@ class MainActivity : GameActivity() {
 
     fun calculateMeasures(model: MainModel){
         cellSize = height / model.maze.nRows
-        offSet = (width / model.maze.nCols) / 2
+        offSetX = (width - model.maze.nCols * cellSize) / 2
+        offSetY = (height - model.maze.nRows * cellSize) / 2
     }
 
     fun drawMaze() {
@@ -63,16 +65,16 @@ class MainActivity : GameActivity() {
         for (row in 0 until model.maze.nRows) {
             for (col in 0 until model.maze.nCols) {
                 if (model.maze[row, col].type == CellType.WALL) {
-                    graphics.drawRect(((col * cellSize) + offSet).toFloat(), ((row * cellSize) + offSet).toFloat(), cellSize.toFloat(), cellSize.toFloat(), Color.BLUE)
+                    graphics.drawRect(((col * cellSize) + offSetX).toFloat(), ((row * cellSize) + offSetY).toFloat(), cellSize.toFloat(), cellSize.toFloat(), Color.BLUE)
                 }
                 if (model.maze[row, col].type == CellType.HOME) {
                     drawMonsters()
                 }
                 if (model.maze[row, col].type == CellType.POTION && !model.maze[row, col].used) {
-                    graphics.drawRect(((col * cellSize) + offSet).toFloat(), ((row * cellSize) + offSet).toFloat(), cellSize.toFloat(), cellSize.toFloat(), Color.GREEN)
+                    graphics.drawRect(((col * cellSize) + offSetX).toFloat(), ((row * cellSize) + offSetY).toFloat(), cellSize.toFloat(), cellSize.toFloat(), Color.GREEN)
                 }
                 if (model.maze[row, col].type == CellType.GOLD && !model.maze[row, col].used) {
-                    graphics.drawCircle( ((col * cellSize) + offSet).toFloat(), ((row * cellSize) + offSet).toFloat(), (cellSize / 2).toFloat(), Color.YELLOW)
+                    graphics.drawCircle((col + 0.5f)  * cellSize + offSetX, (row + 0.5f) * cellSize + offSetY, (cellSize / 6).toFloat(), Color.YELLOW)
                 }
             }
         }
@@ -80,15 +82,15 @@ class MainActivity : GameActivity() {
 
     fun drawPrincess() {
         if (!model.princess.hasPotion) {
-            graphics.drawCircle(model.princess.xPos * cellSize + offSet, model.princess.yPos * cellSize + offSet, (cellSize / 2).toFloat(), Color.CYAN)
+            graphics.drawCircle(model.princess.xPos * cellSize + offSetX, model.princess.yPos * cellSize + offSetY, (cellSize / 2).toFloat(), Color.CYAN)
         } else {
-            graphics.drawCircle(model.princess.xPos * cellSize + offSet, model.princess.yPos * cellSize + offSet, (cellSize / 2).toFloat(), Color.GREEN)
+            graphics.drawCircle(model.princess.xPos * cellSize + offSetX, model.princess.yPos * cellSize + offSetY, (cellSize / 2).toFloat(), Color.GREEN)
         }
     }
 
     fun drawMonsters() {
         for (m in model.monsters) {
-            graphics.drawRect(m.xPos * cellSize + offSet, m.yPos * cellSize + offSet, cellSize.toFloat(), cellSize.toFloat(), Color.RED)
+            graphics.drawRect((m.xPos - 0.5f) * cellSize + offSetX, (m.yPos - 0.5f) * cellSize + offSetY, cellSize.toFloat(), cellSize.toFloat(), Color.RED)
         }
     }
 }
