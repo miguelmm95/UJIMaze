@@ -10,6 +10,7 @@ class Controller(var width: Int, var height: Int, private val model: MainModel, 
 
     override fun onUpdate(deltaTime: Float, touchEvents: MutableList<TouchHandler.TouchEvent>?) {
         model.update(deltaTime)
+        view.calculateMeasures(model)
 
         if (touchEvents != null) {
             for (event in touchEvents) {
