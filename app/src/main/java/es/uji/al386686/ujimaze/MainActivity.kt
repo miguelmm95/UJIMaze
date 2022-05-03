@@ -1,7 +1,10 @@
 package es.uji.al386686.ujimaze
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.media.AudioAttributes
+import android.media.SoundPool
 import android.os.Bundle
 import android.util.DisplayMetrics
 import es.uji.jvilar.barbariangold.model.CellType
@@ -9,23 +12,38 @@ import es.uji.vj1229.framework.GameActivity
 import es.uji.vj1229.framework.Graphics
 import es.uji.vj1229.framework.IGameController
 
-class MainActivity : GameActivity() {
+class MainActivity : GameActivity(), MainModel.SoundPlayer {
 
     private var width = 0
     private var height = 0
+    private var cellSize: Int = 0
+    private var offSetX: Int = 0
+    private var offSetY: Int = 0
 
-    var cellSize : Int = 0
-    var offSetX : Int = 0
-    var offSetY : Int = 0
-
-    private val model = MainModel()
+    private val model = MainModel(this)
+    private lateinit var soundPool: SoundPool
     private lateinit var controller: Controller
 
     private lateinit var graphics: Graphics
 
+    private var coinId = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         landscapeFullScreenOnCreate()
+        prepareSoundPool(this)
+    }
+
+    private fun prepareSoundPool(context: Context) {
+        val attributes = AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build()
+        soundPool = SoundPool.Builder()
+                .setMaxStreams(5)
+                .setAudioAttributes(attributes)
+                .build()
+        coinId = soundPool.load(context, R.raw.coineffect, 0)
     }
 
     override fun buildGameController(): IGameController {
@@ -52,7 +70,7 @@ class MainActivity : GameActivity() {
         return graphics.frameBuffer
     }
 
-    fun calculateMeasures(model: MainModel){
+    fun calculateMeasures(model: MainModel) {
         cellSize = height / model.maze.nRows
         offSetX = (width - model.maze.nCols * cellSize) / 2
         offSetY = (height - model.maze.nRows * cellSize) / 2
@@ -74,7 +92,7 @@ class MainActivity : GameActivity() {
                     graphics.drawRect(((col * cellSize) + offSetX).toFloat(), ((row * cellSize) + offSetY).toFloat(), cellSize.toFloat(), cellSize.toFloat(), Color.GREEN)
                 }
                 if (model.maze[row, col].type == CellType.GOLD && !model.maze[row, col].used) {
-                    graphics.drawCircle((col + 0.5f)  * cellSize + offSetX, (row + 0.5f) * cellSize + offSetY, (cellSize / 6).toFloat(), Color.YELLOW)
+                    graphics.drawCircle((col + 0.5f) * cellSize + offSetX, (row + 0.5f) * cellSize + offSetY, (cellSize / 6).toFloat(), Color.YELLOW)
                 }
             }
         }
@@ -92,5 +110,9 @@ class MainActivity : GameActivity() {
         for (m in model.monsters) {
             graphics.drawRect((m.xPos - 0.5f) * cellSize + offSetX, (m.yPos - 0.5f) * cellSize + offSetY, cellSize.toFloat(), cellSize.toFloat(), Color.RED)
         }
+    }
+
+    override fun playCoinEffect() {
+        soundPool.play(coinId, 0.9f, 0.9f, 0, 0, 1f)
     }
 }

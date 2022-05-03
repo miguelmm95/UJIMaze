@@ -57,7 +57,6 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
         if (maze[position].type == CellType.GOLD && !maze[position].used) {
             maze[position].used = true
             coinsCollected += 1
-
         }
     }
 

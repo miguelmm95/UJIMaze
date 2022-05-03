@@ -1,14 +1,21 @@
 package es.uji.al386686.ujimaze
 
+import android.media.SoundPool
 import android.util.Log
 import es.uji.al386686.ujimaze.Model.Direction
 import es.uji.al386686.ujimaze.Model.Position
 import es.uji.jvilar.barbariangold.model.CellType
 import es.uji.jvilar.barbariangold.model.Maze
 import kotlin.math.abs
+import kotlin.system.exitProcess
 import java.util.ArrayList as ArrayList
 
-class MainModel {
+class MainModel(private val soundPlayer : SoundPlayer) {
+
+    interface SoundPlayer{
+        fun playCoinEffect()
+    }
+
     var level = 1
     var maze: Maze = Levels.all[level - 1]
         private set
@@ -34,6 +41,10 @@ class MainModel {
     fun update(deltaTime: Float) {
 
         checkCollisions()
+
+        /*if (maze[princess.position].type == CellType.GOLD && !maze[princess.position].used){
+            soundPlayer.playCoinEffect()
+        }*/
 
         if (princess.coinsCollected == maze.gold) {
             if (level == Levels.all.size) {
