@@ -12,6 +12,7 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
     var direction: Direction = Direction.RIGHT
     var coinsCollected: Int = 0
     var hasPotion: Boolean = false
+    var coinCollected : Boolean = false
     var time: Float = 0f
 
     companion object {
@@ -57,6 +58,7 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
         if (maze[position].type == CellType.GOLD && !maze[position].used) {
             maze[position].used = true
             coinsCollected += 1
+            coinCollected = true
         }
     }
 

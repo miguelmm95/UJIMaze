@@ -10,9 +10,9 @@ import kotlin.math.abs
 import kotlin.system.exitProcess
 import java.util.ArrayList as ArrayList
 
-class MainModel(private val soundPlayer : SoundPlayer) {
+class MainModel(private val soundPlayer: SoundPlayer) {
 
-    interface SoundPlayer{
+    interface SoundPlayer {
         fun playCoinEffect()
     }
 
@@ -42,9 +42,10 @@ class MainModel(private val soundPlayer : SoundPlayer) {
 
         checkCollisions()
 
-        /*if (maze[princess.position].type == CellType.GOLD && !maze[princess.position].used){
+        if (princess.coinCollected) {
             soundPlayer.playCoinEffect()
-        }*/
+            princess.coinCollected = false
+        }
 
         if (princess.coinsCollected == maze.gold) {
             if (level == Levels.all.size) {

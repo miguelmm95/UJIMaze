@@ -77,9 +77,6 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
     }
 
     fun drawMaze() {
-
-        //calculateMeasures(model)
-
         for (row in 0 until model.maze.nRows) {
             for (col in 0 until model.maze.nCols) {
                 if (model.maze[row, col].type == CellType.WALL) {
