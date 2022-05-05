@@ -27,6 +27,8 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
     private lateinit var graphics: Graphics
 
     private var coinId = 0
+    private var hit1Id = 0
+    private var hit2Id = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +46,9 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
                 .setAudioAttributes(attributes)
                 .build()
         coinId = soundPool.load(context, R.raw.coineffect, 0)
+        hit1Id = soundPool.load(context, R.raw.hiteffect, 0)
+        hit2Id = soundPool.load(context, R.raw.hiteffect2, 0)
+
     }
 
     override fun buildGameController(): IGameController {
@@ -111,5 +116,13 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
 
     override fun playCoinEffect() {
         soundPool.play(coinId, 0.9f, 0.9f, 0, 0, 1f)
+    }
+
+    override fun playHit1Effect() {
+        soundPool.play(hit1Id, 0.9f,0.9f,0,0,1f)
+    }
+
+    override fun playHit2Effect() {
+        soundPool.play(hit2Id,0.9f,0.9f,0,0,1f)
     }
 }

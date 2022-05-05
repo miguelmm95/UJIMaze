@@ -14,6 +14,8 @@ class MainModel(private val soundPlayer: SoundPlayer) {
 
     interface SoundPlayer {
         fun playCoinEffect()
+        fun playHit1Effect()
+        fun playHit2Effect()
     }
 
     var level = 1
@@ -83,10 +85,12 @@ class MainModel(private val soundPlayer: SoundPlayer) {
         for (i in 0 until monsters.size) {
             if (abs(princess.xPos - monsters[i].xPos) < 0.4f && abs(princess.yPos - monsters[i].yPos) < 0.4f) {
                 if (princess.hasPotion) {
+                    soundPlayer.playHit1Effect()
                     monsters[i].position = maze.enemyOrigins[i]
                     monsters[i].xPos = maze.enemyOrigins[i].col + 0.5f
                     monsters[i].yPos = maze.enemyOrigins[i].row + 0.5f
                 } else {
+                    soundPlayer.playHit2Effect()
                     princess.dead(maze)
                     resetAllMonsters()
                 }

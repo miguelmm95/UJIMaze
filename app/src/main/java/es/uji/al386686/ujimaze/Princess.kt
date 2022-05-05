@@ -14,10 +14,13 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
     var hasPotion: Boolean = false
     var coinCollected : Boolean = false
     var time: Float = 0f
+    var lifes : Int = INITIAL_LIFES
+    var isDead : Boolean = false
 
     companion object {
         private const val SPEED = 1.5f
         private const val POTION_DURATION = 5f
+        private const val INITIAL_LIFES = 3
     }
 
     fun move(deltaTime: Float, maze: Maze) {
@@ -84,11 +87,16 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
         hasPotion = false
         time = 0f
         direction = Direction.RIGHT
+
+        checkLifes()
     }
 
-    private fun toCenter() {
-        xPos = position.col + 0.5f
-        yPos = position.row + 0.5f
+    private fun checkLifes(){
+        if(lifes < 0){
+            isDead = true
+        }else{
+            lifes -= 1
+        }
     }
 
     private fun checkPotion(deltaTime: Float) {
@@ -99,5 +107,10 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
                 time = 0f
             }
         }
+    }
+
+    private fun toCenter() {
+        xPos = position.col + 0.5f
+        yPos = position.row + 0.5f
     }
 }
