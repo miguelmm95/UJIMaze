@@ -38,13 +38,13 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
 
     private fun prepareSoundPool(context: Context) {
         val attributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_GAME)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build()
+            .setUsage(AudioAttributes.USAGE_GAME)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
         soundPool = SoundPool.Builder()
-                .setMaxStreams(5)
-                .setAudioAttributes(attributes)
-                .build()
+            .setMaxStreams(5)
+            .setAudioAttributes(attributes)
+            .build()
         coinId = soundPool.load(context, R.raw.coineffect, 0)
         hit1Id = soundPool.load(context, R.raw.hiteffect, 0)
         hit2Id = soundPool.load(context, R.raw.hiteffect2, 0)
@@ -55,8 +55,10 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
         val displayMetrics = DisplayMetrics()
         @Suppress("DEPRECATION")
         windowManager.defaultDisplay.getMetrics(displayMetrics)
-        controller = Controller(displayMetrics.widthPixels,
-                displayMetrics.heightPixels, model, this)
+        controller = Controller(
+            displayMetrics.widthPixels,
+            displayMetrics.heightPixels, model, this
+        )
         return controller
     }
 
@@ -70,9 +72,17 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
         graphics.clear(Color.GRAY)
 
         drawMaze()
-        drawPrincess()
+        if (model.state == GameStates.GAME){
+            drawPrincess()
+        }else{
+            drawGameOverHUD()
+        }
 
         return graphics.frameBuffer
+    }
+
+    private fun drawGameOverHUD() {
+        
     }
 
     fun calculateMeasures(model: MainModel) {
@@ -85,16 +95,33 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
         for (row in 0 until model.maze.nRows) {
             for (col in 0 until model.maze.nCols) {
                 if (model.maze[row, col].type == CellType.WALL) {
-                    graphics.drawRect(((col * cellSize) + offSetX).toFloat(), ((row * cellSize) + offSetY).toFloat(), cellSize.toFloat(), cellSize.toFloat(), Color.BLUE)
+                    graphics.drawRect(
+                        ((col * cellSize) + offSetX).toFloat(),
+                        ((row * cellSize) + offSetY).toFloat(),
+                        cellSize.toFloat(),
+                        cellSize.toFloat(),
+                        Color.BLUE
+                    )
                 }
                 if (model.maze[row, col].type == CellType.HOME) {
                     drawMonsters()
                 }
                 if (model.maze[row, col].type == CellType.POTION && !model.maze[row, col].used) {
-                    graphics.drawRect(((col * cellSize) + offSetX).toFloat(), ((row * cellSize) + offSetY).toFloat(), cellSize.toFloat(), cellSize.toFloat(), Color.GREEN)
+                    graphics.drawRect(
+                        ((col * cellSize) + offSetX).toFloat(),
+                        ((row * cellSize) + offSetY).toFloat(),
+                        cellSize.toFloat(),
+                        cellSize.toFloat(),
+                        Color.GREEN
+                    )
                 }
                 if (model.maze[row, col].type == CellType.GOLD && !model.maze[row, col].used) {
-                    graphics.drawCircle((col + 0.5f) * cellSize + offSetX, (row + 0.5f) * cellSize + offSetY, (cellSize / 6).toFloat(), Color.YELLOW)
+                    graphics.drawCircle(
+                        (col + 0.5f) * cellSize + offSetX,
+                        (row + 0.5f) * cellSize + offSetY,
+                        (cellSize / 6).toFloat(),
+                        Color.YELLOW
+                    )
                 }
             }
         }
@@ -102,27 +129,44 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
 
     fun drawPrincess() {
         if (!model.princess.hasPotion) {
-            graphics.drawCircle(model.princess.xPos * cellSize + offSetX, model.princess.yPos * cellSize + offSetY, (cellSize / 2).toFloat(), Color.CYAN)
+            graphics.drawCircle(
+                model.princess.xPos * cellSize + offSetX,
+                model.princess.yPos * cellSize + offSetY,
+                (cellSize / 2).toFloat(),
+                Color.CYAN
+            )
         } else {
-            graphics.drawCircle(model.princess.xPos * cellSize + offSetX, model.princess.yPos * cellSize + offSetY, (cellSize / 2).toFloat(), Color.GREEN)
+            graphics.drawCircle(
+                model.princess.xPos * cellSize + offSetX,
+                model.princess.yPos * cellSize + offSetY,
+                (cellSize / 2).toFloat(),
+                Color.GREEN
+            )
         }
     }
 
     fun drawMonsters() {
         for (m in model.monsters) {
-            graphics.drawRect((m.xPos - 0.5f) * cellSize + offSetX, (m.yPos - 0.5f) * cellSize + offSetY, cellSize.toFloat(), cellSize.toFloat(), Color.RED)
+            graphics.drawRect(
+                (m.xPos - 0.5f) * cellSize + offSetX,
+                (m.yPos - 0.5f) * cellSize + offSetY,
+                cellSize.toFloat(),
+                cellSize.toFloat(),
+                Color.RED
+            )
         }
     }
+
 
     override fun playCoinEffect() {
         soundPool.play(coinId, 0.9f, 0.9f, 0, 0, 1f)
     }
 
     override fun playHit1Effect() {
-        soundPool.play(hit1Id, 0.9f,0.9f,0,0,1f)
+        soundPool.play(hit1Id, 0.9f, 0.9f, 0, 0, 1f)
     }
 
     override fun playHit2Effect() {
-        soundPool.play(hit2Id,0.9f,0.9f,0,0,1f)
+        soundPool.play(hit2Id, 0.9f, 0.9f, 0, 0, 1f)
     }
 }

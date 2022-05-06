@@ -10,6 +10,11 @@ import kotlin.math.abs
 import kotlin.system.exitProcess
 import java.util.ArrayList as ArrayList
 
+enum class GameStates{
+    GAME,
+    GAMEOVER
+}
+
 class MainModel(private val soundPlayer: SoundPlayer) {
 
     interface SoundPlayer {
@@ -17,6 +22,9 @@ class MainModel(private val soundPlayer: SoundPlayer) {
         fun playHit1Effect()
         fun playHit2Effect()
     }
+
+    var state = GameStates.GAME
+        private set
 
     var level = 1
     var maze: Maze = Levels.all[level - 1]
@@ -93,8 +101,25 @@ class MainModel(private val soundPlayer: SoundPlayer) {
                     soundPlayer.playHit2Effect()
                     princess.dead(maze)
                     resetAllMonsters()
+                    changeState()
                 }
             }
         }
+    }
+
+    fun changeState(){
+        if (princess.isDead){
+            state = GameStates.GAMEOVER
+        }
+    }
+
+    fun restartGame() {
+        for (maze in Levels.all){
+            maze.reset()
+        }
+        level = 1
+        maze = Levels.all[level-1]
+        princess.resetPrincess(maze)
+        state = GameStates.GAME
     }
 }
