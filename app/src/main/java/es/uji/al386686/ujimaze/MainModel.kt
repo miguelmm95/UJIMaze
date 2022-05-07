@@ -10,7 +10,7 @@ import kotlin.math.abs
 import kotlin.system.exitProcess
 import java.util.ArrayList as ArrayList
 
-enum class GameStates{
+enum class GameStates {
     GAME,
     GAMEOVER
 }
@@ -45,7 +45,12 @@ class MainModel(private val soundPlayer: SoundPlayer) {
     }
 
     init {
-        princess = Princess(maze.origin.col + 0.5f, maze.origin.row + 0.5f, Position(maze.origin.col, maze.origin.row), true)
+        princess = Princess(
+            maze.origin.col + 0.5f,
+            maze.origin.row + 0.5f,
+            Position(maze.origin.col, maze.origin.row),
+            true
+        )
     }
 
     fun update(deltaTime: Float) {
@@ -63,6 +68,7 @@ class MainModel(private val soundPlayer: SoundPlayer) {
             } else {
                 level += 1
                 maze = Levels.all[level - 1]
+                princess.resetPrincess(maze)
             }
         } else {
             princess.move(deltaTime, maze)
@@ -107,19 +113,18 @@ class MainModel(private val soundPlayer: SoundPlayer) {
         }
     }
 
-    fun changeState(){
-        if (princess.isDead){
+    fun changeState() {
+        if (princess.isDead) {
             state = GameStates.GAMEOVER
         }
     }
 
     fun restartGame() {
-        for (maze in Levels.all){
+        for (maze in Levels.all) {
             maze.reset()
         }
         level = 1
-        maze = Levels.all[level-1]
-        princess.resetPrincess(maze)
+        maze = Levels.all[level - 1]
         state = GameStates.GAME
     }
 }

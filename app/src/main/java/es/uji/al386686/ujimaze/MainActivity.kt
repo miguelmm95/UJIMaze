@@ -72,9 +72,9 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
         graphics.clear(Color.GRAY)
 
         drawMaze()
-        if (model.state == GameStates.GAME){
+        if (model.state == GameStates.GAME) {
             drawPrincess()
-        }else{
+        } else {
             drawGameOverHUD()
         }
 
@@ -82,7 +82,23 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
     }
 
     private fun drawGameOverHUD() {
-        
+        graphics.setTextSize(150)
+        graphics.setTextColor(Color.RED)
+        graphics.drawRect(
+            (width / 4).toFloat(),
+            (height / 4).toFloat(),
+            (width / 2).toFloat(),
+            (height / 2).toFloat(),
+            Color.WHITE
+        )
+        graphics.drawText((width / 4).toFloat() + 25f, (height / 4).toFloat() + 200f, "GAME OVER")
+        graphics.setTextSize(75)
+        graphics.setTextColor(Color.BLUE)
+        graphics.drawText(
+            (width / 4).toFloat() + 225f,
+            (height / 4).toFloat() + 350f,
+            "Press to start"
+        )
     }
 
     fun calculateMeasures(model: MainModel) {
@@ -130,15 +146,15 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
     fun drawPrincess() {
         if (!model.princess.hasPotion) {
             graphics.drawCircle(
-                model.princess.xPos * cellSize + offSetX,
-                model.princess.yPos * cellSize + offSetY,
+                (model.princess.xPos * cellSize) + offSetX,
+                (model.princess.yPos * cellSize) + offSetY,
                 (cellSize / 2).toFloat(),
                 Color.CYAN
             )
         } else {
             graphics.drawCircle(
-                model.princess.xPos * cellSize + offSetX,
-                model.princess.yPos * cellSize + offSetY,
+                (model.princess.xPos * cellSize) + offSetX,
+                (model.princess.yPos * cellSize) + offSetY,
                 (cellSize / 2).toFloat(),
                 Color.GREEN
             )
@@ -156,7 +172,6 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
             )
         }
     }
-
 
     override fun playCoinEffect() {
         soundPool.play(coinId, 0.9f, 0.9f, 0, 0, 1f)
