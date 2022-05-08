@@ -1,6 +1,5 @@
 package es.uji.al386686.ujimaze
 
-import android.util.Log
 import es.uji.al386686.ujimaze.Model.Direction
 import es.uji.al386686.ujimaze.Model.Position
 import es.uji.jvilar.barbariangold.model.CellType
@@ -13,7 +12,7 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
     var coinsCollected: Int = 0
     var hasPotion: Boolean = false
     var coinCollected : Boolean = false
-    var time: Float = 0f
+    var potionTime: Float = 0f
     var lifes : Int = INITIAL_LIFES
     var isDead : Boolean = false
 
@@ -77,7 +76,7 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
         yPos = maze.origin.row + 0.5f
         coinsCollected = 0
         hasPotion = false
-        time = 0f
+        potionTime = 0f
         direction = Direction.RIGHT
     }
 
@@ -85,7 +84,7 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
         xPos = maze.origin.col + 0.5f
         yPos = maze.origin.row + 0.5f
         hasPotion = false
-        time = 0f
+        potionTime = 0f
         direction = Direction.RIGHT
 
         checkLifes()
@@ -101,10 +100,10 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
 
     private fun checkPotion(deltaTime: Float) {
         if (hasPotion) {
-            time += deltaTime
-            if (time >= POTION_DURATION) {
+            potionTime += deltaTime
+            if (potionTime >= POTION_DURATION) {
                 hasPotion = false
-                time = 0f
+                potionTime = 0f
             }
         }
     }
