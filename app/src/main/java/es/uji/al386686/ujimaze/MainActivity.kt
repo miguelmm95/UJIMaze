@@ -139,6 +139,15 @@ class MainActivity : GameActivity(), MainModel.SoundPlayer {
                         Color.YELLOW
                     )
                 }
+                if (model.maze[row, col].type == CellType.DOOR) {
+                    graphics.drawRect(
+                        ((col * cellSize) + offSetX).toFloat(),
+                        ((row * cellSize) + offSetY).toFloat(),
+                        cellSize.toFloat(),
+                        cellSize.toFloat() / 2,
+                        Color.BLACK
+                    )
+                }
             }
         }
     }

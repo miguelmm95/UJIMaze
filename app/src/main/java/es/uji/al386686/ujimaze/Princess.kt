@@ -17,9 +17,9 @@ class Princess(var xPos: Float, var yPos: Float, var position: Position, var isM
     var isDead : Boolean = false
 
     companion object {
-        private const val SPEED = 1.5f
+        private const val SPEED = 5f
         private const val POTION_DURATION = 5f
-        private const val INITIAL_LIFES = 3
+        private const val INITIAL_LIFES = -1
     }
 
     fun move(deltaTime: Float, maze: Maze) {

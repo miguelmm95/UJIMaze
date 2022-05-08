@@ -125,6 +125,7 @@ class MainModel(private val soundPlayer: SoundPlayer) {
         }
         level = 1
         maze = Levels.all[level - 1]
+        princess.resetPrincess(maze)
         state = GameStates.GAME
     }
 }

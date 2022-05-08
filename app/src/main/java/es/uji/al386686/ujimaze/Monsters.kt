@@ -16,7 +16,7 @@ class Monsters(var position: Position) {
     var direction: Direction = Direction.RIGHT
 
     companion object {
-        private const val SPEED = 1f
+        private const val SPEED = 3f
     }
 
     fun move(deltaTime: Float, maze: Maze) {
